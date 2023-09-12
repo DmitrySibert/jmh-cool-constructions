@@ -85,16 +85,4 @@ public class BubbleVsQuick {
 
         return i + 1;
     }
-
-    public static void main(String[] args) throws RunnerException {
-        Options opt = new OptionsBuilder()
-                .include(BubbleVsQuick.class.getSimpleName())
-                .warmupIterations(1)
-                .measurementIterations(1)
-                .forks(1)
-                .addProfiler(GCProfiler.class)
-                .build();
-
-        new Runner(opt).run();
-    }
 }

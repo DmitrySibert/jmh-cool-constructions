@@ -65,16 +65,4 @@ public class CodeVsRxCollectionMapComparison {
     private Flowable<Integer> incRxWrapper(Integer value) {
         return Flowable.fromCallable(() -> this.inc(value));
     }
-
-    public static void main(String[] args) throws RunnerException {
-        Options opt = new OptionsBuilder()
-                .include(CodeVsRxCollectionMapComparison.class.getSimpleName())
-                .warmupIterations(5)
-                .measurementIterations(5)
-                .forks(2)
-                .addProfiler(GCProfiler.class)
-                .build();
-
-        new Runner(opt).run();
-    }
 }

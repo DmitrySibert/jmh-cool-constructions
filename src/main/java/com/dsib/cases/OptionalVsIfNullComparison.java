@@ -40,16 +40,4 @@ public class OptionalVsIfNullComparison {
     public Integer inc(Integer integer) {
         return ++integer;
     }
-
-    public static void main(String[] args) throws RunnerException {
-        Options opt = new OptionsBuilder()
-                .include(OptionalVsIfNullComparison.class.getSimpleName())
-                .warmupIterations(5)
-                .measurementIterations(5)
-                .forks(2)
-                .addProfiler(GCProfiler.class)
-                .build();
-
-        new Runner(opt).run();
-    }
 }

@@ -49,16 +49,4 @@ public class StringFormatVsConcatination {
                 .append(holder.arg2);
         blackhole.consume(stringBuilder.toString());
     }
-
-    public static void main(String[] args) throws RunnerException {
-        Options opt = new OptionsBuilder()
-                .include(StringFormatVsConcatination.class.getSimpleName())
-                .warmupIterations(5)
-                .measurementIterations(5)
-                .forks(2)
-                .addProfiler(GCProfiler.class)
-                .build();
-
-        new Runner(opt).run();
-    }
 }
