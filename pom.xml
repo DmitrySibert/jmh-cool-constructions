@@ -40,6 +40,12 @@
             <version>3.1.5</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>0.10.2</version>
+        </dependency>
+
 
     </dependencies>
 
@@ -59,7 +65,7 @@
                             <archive>
                                 <manifest>
                                     <mainClass>
-                                        com.dsib.cases.AllRunner
+                                        com.dsib.AllRunner
                                     </mainClass>
                                 </manifest>
                             </archive>

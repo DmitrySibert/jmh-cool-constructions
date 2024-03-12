@@ -1,11 +1,6 @@
 package com.dsib.cases;
 
 import org.openjdk.jmh.annotations.*;
-import org.openjdk.jmh.profile.GCProfiler;
-import org.openjdk.jmh.runner.Runner;
-import org.openjdk.jmh.runner.RunnerException;
-import org.openjdk.jmh.runner.options.Options;
-import org.openjdk.jmh.runner.options.OptionsBuilder;
 
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -16,28 +11,28 @@ import java.util.concurrent.TimeUnit;
 public class OptionalVsIfNullComparison {
 
     @State(Scope.Benchmark)
-    public static class IntegerHolder {
-        public Integer integer = 3;
+    public static class Holder {
+        public Integer value = 3;
     }
 
     @Benchmark
-    @OutputTimeUnit(TimeUnit.SECONDS)
-    @BenchmarkMode(Mode.Throughput)
-    public void DoOptional(IntegerHolder holder) {
-        Optional.ofNullable(holder.integer)
-                .ifPresent(this::inc);
+    @OutputTimeUnit(TimeUnit.NANOSECONDS)
+    @BenchmarkMode(Mode.AverageTime)
+    public void DoOptional(Holder holder) {
+        Optional.ofNullable(holder.value)
+                .ifPresent(this::increment);
     }
 
     @Benchmark
-    @OutputTimeUnit(TimeUnit.SECONDS)
-    @BenchmarkMode(Mode.Throughput)
-    public void DoIf(IntegerHolder holder) {
-        if (holder.integer != null) {
-            inc(holder.integer);
+    @OutputTimeUnit(TimeUnit.NANOSECONDS)
+    @BenchmarkMode(Mode.AverageTime)
+    public void DoIf(Holder holder) {
+        if (holder.value != null) {
+            increment(holder.value);
         }
     }
 
-    public Integer inc(Integer integer) {
-        return ++integer;
+    public void increment(Integer value) {
+        ++value;
     }
 }

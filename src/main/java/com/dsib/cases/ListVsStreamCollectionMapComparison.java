@@ -2,11 +2,6 @@ package com.dsib.cases;
 
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
-import org.openjdk.jmh.profile.GCProfiler;
-import org.openjdk.jmh.runner.Runner;
-import org.openjdk.jmh.runner.RunnerException;
-import org.openjdk.jmh.runner.options.Options;
-import org.openjdk.jmh.runner.options.OptionsBuilder;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -17,16 +12,21 @@ import java.util.stream.Collectors;
  */
 public class ListVsStreamCollectionMapComparison {
 
+    private static final String DEFAULT_COLLECTION_SIZE = "4000";
+
     @State(Scope.Benchmark)
     public static class ListHolder {
 
         public List<Integer> intList;
 
+        @Param({DEFAULT_COLLECTION_SIZE})
+        public int size;
+
         @Setup(Level.Trial)
         public void doSetup() {
             Random random = new Random();
             intList = new ArrayList<>();
-            for (int i = 0; i < 300; i++) {
+            for (int i = 0; i < size; i++) {
                 intList.add(random.nextInt(0, 500));
             }
         }
