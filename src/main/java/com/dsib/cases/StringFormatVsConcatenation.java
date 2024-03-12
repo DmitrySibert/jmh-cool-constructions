@@ -2,18 +2,13 @@ package com.dsib.cases;
 
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
-import org.openjdk.jmh.profile.GCProfiler;
-import org.openjdk.jmh.runner.Runner;
-import org.openjdk.jmh.runner.RunnerException;
-import org.openjdk.jmh.runner.options.Options;
-import org.openjdk.jmh.runner.options.OptionsBuilder;
 
 import java.util.concurrent.TimeUnit;
 
 /**
  * Compare time consumed by using of String::format vs string concat vs StringBuilder
  */
-public class StringFormatVsConcatination {
+public class StringFormatVsConcatenation {
 
     @State(Scope.Benchmark)
     public static class IntegerHolder {

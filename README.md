@@ -132,3 +132,40 @@ CodeVsRxCollectionMapComparison.doRx:·gc.churn.Survivor_Space.norm         avgt
 CodeVsRxCollectionMapComparison.doRx:·gc.count                             avgt   10  43425.000            counts
 CodeVsRxCollectionMapComparison.doRx:·gc.time                              avgt   10   7299.000                ms
 ```
+
+---
+## Return value vs throw exception
+```
+Benchmark                                                Mode  Cnt  Score   Error  Units
+```
+
+
+---
+## Method reference vs Lambda
+```
+Benchmark                                                Mode  Cnt  Score   Error  Units
+```
+
+
+---
+## Regular and multithreading collections in Write mode
+```
+Benchmark                                                Mode  Cnt  Score   Error  Units
+ConcurrentMapsVsMapComparison.doMap                      avgt    6  0,383 ± 0,028  ms/op
+ConcurrentMapsVsMapComparison.doConcurrentMap            avgt    6  1,301 ± 0,387  ms/op
+ConcurrentMapsVsMapComparison.doSynchronizedMap          avgt    6  0,595 ± 0,024  ms/op
+ConcurrentMapsVsMapComparison.doConcurrentMapParallel    avgt    6  0,824 ± 0,121  ms/op
+ConcurrentMapsVsMapComparison.doSynchronizedMapParallel  avgt    6  2,731 ± 0,051  ms/op
+ConcurrentMapsVsMapComparison.doThreadsConcurrent        avgt    6  0,319 ± 0,048  ms/op
+ConcurrentMapsVsMapComparison.doThreadSynchronized       avgt    6  2,771 ± 0,066  ms/op
+
+
+
+
+
+Benchmark                               (size)  Mode  Cnt   Score   Error  Units
+MonitorLockCostErrorDemo.doSortAvg       20000  avgt    2  60,393          ns/op
+MonitorLockCostErrorDemo.doSortLockAvg   20000  avgt    2  72,166          ns/op
+
+MonitorLockCostErrorDemo.doSortAvg      200000  avgt    6  238,013 ± 30,911  ns/op
+MonitorLockCostErrorDemo.doSortLockAvg  200000  avgt    6  263,990 ± 13,608  ns/op

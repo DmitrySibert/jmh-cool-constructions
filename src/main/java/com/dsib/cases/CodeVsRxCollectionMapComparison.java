@@ -3,11 +3,6 @@ package com.dsib.cases;
 import io.reactivex.rxjava3.core.Flowable;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
-import org.openjdk.jmh.profile.GCProfiler;
-import org.openjdk.jmh.runner.Runner;
-import org.openjdk.jmh.runner.RunnerException;
-import org.openjdk.jmh.runner.options.Options;
-import org.openjdk.jmh.runner.options.OptionsBuilder;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -20,16 +15,22 @@ import java.util.concurrent.TimeUnit;
  */
 public class CodeVsRxCollectionMapComparison {
 
+    private static final String DEFAULT_COLLECTION_SIZE = "4000";
+    private static final String ADDITIONAL_STR = "add";
+
     @State(Scope.Benchmark)
     public static class ListHolder {
 
         public List<Integer> intList;
 
+        @Param({DEFAULT_COLLECTION_SIZE})
+        public int size;
+
         @Setup(Level.Trial)
         public void doSetup() {
             Random random = new Random();
             intList = new ArrayList<>();
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < size; i++) {
                 intList.add(random.nextInt(0, 500));
             }
         }
@@ -41,7 +42,7 @@ public class CodeVsRxCollectionMapComparison {
     public void doRx(ListHolder holder, Blackhole blackhole) {
         List<String> strs = Flowable.fromIterable(holder.intList)
                 .flatMap(this::incRxWrapper)
-                .map(str -> str + "add")
+                .map(str -> str + ADDITIONAL_STR)
                 .toList()
                 .blockingGet();
         blackhole.consume(strs);
@@ -53,7 +54,7 @@ public class CodeVsRxCollectionMapComparison {
     public void doArrayList(ListHolder holder, Blackhole blackhole) {
         List<String> strs = new LinkedList<>();
         for (Integer i : holder.intList) {
-            strs.add(inc(i) + "add");
+            strs.add(inc(i) + ADDITIONAL_STR);
         }
         blackhole.consume(strs);
     }

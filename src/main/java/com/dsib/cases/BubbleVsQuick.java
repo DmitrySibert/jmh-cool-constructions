@@ -2,11 +2,6 @@ package com.dsib.cases;
 
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
-import org.openjdk.jmh.profile.GCProfiler;
-import org.openjdk.jmh.runner.Runner;
-import org.openjdk.jmh.runner.RunnerException;
-import org.openjdk.jmh.runner.options.Options;
-import org.openjdk.jmh.runner.options.OptionsBuilder;
 
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -24,7 +19,7 @@ public class BubbleVsQuick {
         @Setup(Level.Invocation)
         public void doSetup() {
             Random random = new Random();
-            intList = new int[1000];
+            intList = new int[10000];
             for (int i = 0; i < intList.length; i++) {
                 intList[i] = random.nextInt(0, 500);
             }
@@ -33,24 +28,7 @@ public class BubbleVsQuick {
 
     @Benchmark
     @OutputTimeUnit(TimeUnit.MILLISECONDS)
-    @BenchmarkMode(Mode.Throughput)
-    public void doBubble(ArrayHolder holder, Blackhole blackhole) {
-        int i, j, temp;
-        for (i = 0; i < holder.intList.length - 1; i++) {
-            for (j = 0; j < holder.intList.length - i - 1; j++) {
-                if (holder.intList[j] > holder.intList[j + 1]) {
-                    temp = holder.intList[j];
-                    holder.intList[j] = holder.intList[j + 1];
-                    holder.intList[j + 1] = temp;
-                }
-            }
-        }
-        blackhole.consume(holder.intList);
-    }
-
-    @Benchmark
-    @OutputTimeUnit(TimeUnit.MILLISECONDS)
-    @BenchmarkMode(Mode.Throughput)
+    @BenchmarkMode(Mode.AverageTime)
     public void doQuick(ArrayHolder holder, Blackhole blackhole) {
         quickSort(holder.intList, 0, holder.intList.length - 1);
         blackhole.consume(holder.intList);
@@ -84,5 +62,22 @@ public class BubbleVsQuick {
         arr[end] = swapTemp;
 
         return i + 1;
+    }
+
+    @Benchmark
+    @OutputTimeUnit(TimeUnit.MILLISECONDS)
+    @BenchmarkMode(Mode.AverageTime)
+    public void doBubble(ArrayHolder holder, Blackhole blackhole) {
+        int i, j, temp;
+        for (i = 0; i < holder.intList.length - 1; i++) {
+            for (j = 0; j < holder.intList.length - i - 1; j++) {
+                if (holder.intList[j] > holder.intList[j + 1]) {
+                    temp = holder.intList[j];
+                    holder.intList[j] = holder.intList[j + 1];
+                    holder.intList[j + 1] = temp;
+                }
+            }
+        }
+        blackhole.consume(holder.intList);
     }
 }
